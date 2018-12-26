@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>HelloWorld! tesseract-ocr | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言前段时间工作中发现如果能够将一些相同标准的图片中文字识别出来，能提升不少我们的用户体验。于是就看了一下图片文字识别相关的功能。 首先就是了解了一下各大厂的api，那识别率自然是很高，效果非常的不错，但问题就是，限制调用次数并且模型不受自己的控制，或者就需要充钱使你变强。（这里贴一个别人的分享吧：Java-基于百度API的图片文字识别（支持中文，英文和中英文混合） - TheLoveFromWS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HelloWorld! tesseract-ocr">
+<meta property="og:url" content="http://yoursite.com/2018/12/24/搞一个HelloWorld版的OCR/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言前段时间工作中发现如果能够将一些相同标准的图片中文字识别出来，能提升不少我们的用户体验。于是就看了一下图片文字识别相关的功能。 首先就是了解了一下各大厂的api，那识别率自然是很高，效果非常的不错，但问题就是，限制调用次数并且模型不受自己的控制，或者就需要充钱使你变强。（这里贴一个别人的分享吧：Java-基于百度API的图片文字识别（支持中文，英文和中英文混合） - TheLoveFromWS">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db206d6aaadc1?w=1145&h=691&f=png&s=69580">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db20b0982127e?w=628&h=434&f=png&s=30957">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db212f9c37e51?w=982&h=152&f=png&s=5472">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db21a98dc4dd4?w=177&h=69&f=png&s=1567">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db24a9793f483?w=565&h=86&f=png&s=6003">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db21e36ab2ff5?w=509&h=284&f=png&s=18864">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db275a5d187a8?w=366&h=90&f=png&s=2224">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db2994c96cc63?w=610&h=247&f=png&s=25885">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db343da500f5a?w=803&h=246&f=png&s=40291">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db3d617017b7e?w=778&h=472&f=png&s=41945">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db4d8861dcf64?w=695&h=47&f=png&s=36784">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db5a91f1a135b?w=962&h=222&f=png&s=23100">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db5dc82d7ecba?w=344&h=341&f=png&s=19223">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db679105d31cd?w=903&h=506&f=png&s=44035">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db6b602da91a2?w=1195&h=469&f=png&s=32710">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db7c28f1aeffa?w=779&h=473&f=png&s=40125">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db8ab2d5c01f7?w=985&h=444&f=png&s=43435">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db995455450d4?w=321&h=125&f=png&s=6513">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167dba5a037d4f90?w=973&h=607&f=png&s=59762">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167dbaca46f9b9bf?w=478&h=159&f=png&s=10065">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167dbc44001fcd4a?w=626&h=148&f=png&s=14230">
+<meta property="og:updated_time" content="2018-12-24T03:53:45.556Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HelloWorld! tesseract-ocr">
+<meta name="twitter:description" content="前言前段时间工作中发现如果能够将一些相同标准的图片中文字识别出来，能提升不少我们的用户体验。于是就看了一下图片文字识别相关的功能。 首先就是了解了一下各大厂的api，那识别率自然是很高，效果非常的不错，但问题就是，限制调用次数并且模型不受自己的控制，或者就需要充钱使你变强。（这里贴一个别人的分享吧：Java-基于百度API的图片文字识别（支持中文，英文和中英文混合） - TheLoveFromWS">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/12/23/167db206d6aaadc1?w=1145&h=691&f=png&s=69580">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-搞一个HelloWorld版的OCR" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/24/搞一个HelloWorld版的OCR/" class="article-date">
+  <time datetime="2018-12-24T00:57:42.422Z" itemprop="datePublished">2018-12-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HelloWorld! tesseract-ocr
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间工作中发现如果能够将一些相同标准的图片中文字识别出来，能提升不少我们的用户体验。于是就看了一下图片文字识别相关的功能。</p>
+<p>首先就是了解了一下各大厂的api，那识别率自然是很高，效果非常的不错，但问题就是，限制调用次数并且模型不受自己的控制，或者就需要充钱使你变强。<br>（这里贴一个别人的分享吧：<a href="https://blog.csdn.net/wsk1103/article/details/79316220" target="_blank" rel="noopener">Java-基于百度API的图片文字识别（支持中文，英文和中英文混合） - TheLoveFromWSK - CSDN博客</a>）</p>
+<p>然后就自己了解了下ocr和tesseract。本文主要是一个helloworld版本的tesseract入门使用教程…所以还请大佬轻拍</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>OCR：光学字符识别（英语：Optical Character Recognition，OCR）是指对文本资料的图像文件进行分析识别处理，获取文字及版面信息的过程。</p>
+<p>本文主要讲的是Tesseract-OCR：Tesseract是Ray Smith于1985到1995年间在惠普布里斯托实验室开发的一个OCR引擎，曾经在1995 UNLV精确度测试中名列前茅。但1996年后基本停止了开发。2006年，Google邀请Smith加盟，重启该项目。目前项目的许可证是Apache 2.0。该项目目前支持Windows、Linux和Mac OS 等主流平台。但作为一个引擎，它只提供命令行工具。</p>
+<h2 id="Tesseract安装"><a href="#Tesseract安装" class="headerlink" title="Tesseract安装"></a>Tesseract安装</h2><p>有兴趣研究源码的同学可以看下GitHub地址：<a href="https://github.com/tesseract-ocr/tesseract" target="_blank" rel="noopener">GitHub - tesseract-ocr/tesseract: Tesseract Open Source OCR Engine (main repository)</a><br>下载链接，mac、windows、linux都有，可取所需：<a href="https://github.com/tesseract-ocr/tesseract/wiki/Downloads" target="_blank" rel="noopener">Downloads · tesseract-ocr/tesseract Wiki · GitHub</a></p>
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><h4 id="1-下载完成后直接执行exe文件，安装到对应的文件夹即可。"><a href="#1-下载完成后直接执行exe文件，安装到对应的文件夹即可。" class="headerlink" title="1.下载完成后直接执行exe文件，安装到对应的文件夹即可。"></a>1.下载完成后直接执行exe文件，安装到对应的文件夹即可。</h4><h4 id="2-配置环境变量："><a href="#2-配置环境变量：" class="headerlink" title="2.配置环境变量："></a>2.配置环境变量：</h4><p>在Path中新增环境变量，地址是Tesseract-ocr的安装目录<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db206d6aaadc1?w=1145&amp;h=691&amp;f=png&amp;s=69580" alt=""></p>
+<h4 id="3-添加tessdata系统变量"><a href="#3-添加tessdata系统变量" class="headerlink" title="3.添加tessdata系统变量"></a>3.添加tessdata系统变量</h4><p>在系统变量中添加TESSDATA_PREFIX，变量值为Tesseract-ocr目录中的tessdata文件夹<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db20b0982127e?w=628&amp;h=434&amp;f=png&amp;s=30957" alt=""></p>
+<h4 id="4-进入cmd检查是否安装完成"><a href="#4-进入cmd检查是否安装完成" class="headerlink" title="4.进入cmd检查是否安装完成"></a>4.进入cmd检查是否安装完成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db212f9c37e51?w=982&amp;h=152&amp;f=png&amp;s=5472" alt=""><br>出现如上图一样的东西那就是安装ok啦，第一步也就搞完了</p>
+<h2 id="使用Tesseract"><a href="#使用Tesseract" class="headerlink" title="使用Tesseract"></a>使用Tesseract</h2><p>安装成功之后呢，自然是要try一下的<br>1.准备个图片PNG,JPG都是可以的（具体支持哪些格式就不一一列举了，这里我就用png了）<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db21a98dc4dd4?w=177&amp;h=69&amp;f=png&amp;s=1567" alt=""><br>2.然后敲命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract imagename outputbase [-l lang] [--oem ocrenginemode] [--psm pagesegmode] [configfiles...]</span><br></pre></td></tr></table></figure></p>
+<p>这里解释一下，就是tesseract [图片的地址+名字+后缀] [输出的地址+名字]<br>例如：<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db24a9793f483?w=565&amp;h=86&amp;f=png&amp;s=6003" alt=""></p>
+<p>3.这样就会在目录下申城一个DemoAnswer.txt的文件<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db21e36ab2ff5?w=509&amp;h=284&amp;f=png&amp;s=18864" alt=""><br>ok，结果正确</p>
+<p>但是这里如果是中文呢？重复上面的操作试下</p>
+<p>4.中文识别<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db275a5d187a8?w=366&amp;h=90&amp;f=png&amp;s=2224" alt=""></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db2994c96cc63?w=610&amp;h=247&amp;f=png&amp;s=25885" alt=""><br>这里会发现重复上面的操作，中文丢失了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract imagename outputbase [-l lang]</span><br></pre></td></tr></table></figure></p>
+<p>这句命令中的 [-l lang] 是设置识别语言的，默认是英语，所以如果需要识别中文还需要去下载中文的字库<br>（其实细心的同学可能在安装的时候有注意到，就已经自动安装了字库）<br>去到tesseract-ocr的安装目录中的tessdata目录下查看***.traineddata就是字库<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db343da500f5a?w=803&amp;h=246&amp;f=png&amp;s=40291" alt=""><br>4.1下载中文字库</p>
+<p>如果安装的时候没有下载的话，可以来这里找自己需要的字库下载<br><a href="https://user-gold-cdn.xitu.io/2018/12/23/167db320b96c9f8a" target="_blank" rel="noopener">Data Files · tesseract-ocr/tesseract Wiki · GitHub</a></p>
+<p>将下载的字库放到tessdata目录中即可</p>
+<p>4.2敲命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract HelloWorldDemo.png DemoAnswer -l chi_sim</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db3d617017b7e?w=778&amp;h=472&amp;f=png&amp;s=41945" alt=""><br>这里就出现了一点点的瑕疵，中文识别的有问题</p>
+<p>这是因为使用的字库跟我们的字体是有差异的，所以如果需要能识别我们图片中的字体，需要去训练我们自己的字库</p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><p>步骤：（转自tesseract的github）</p>
+<p>Prepare training text.<br>准备你的训练文本</p>
+<p>Render text to image + box file. (Or create hand-made box files for existing image data.)<br>将文本转为image+box文件.(如果你已经有image文件的话，只需要手动生成box文件)</p>
+<p>Make unicharset file.<br>生成unicharset文件</p>
+<p>Optionally make dictionary data.<br>有选择性的生成字典数据</p>
+<p>Run tesseract to process image + box file to make training data set.<br>运行tesseract来处理之前的image+box文件生成一个训练数据集合</p>
+<p>Run training on training data set.<br>在训练数据集合的基础上进行训练</p>
+<p>Combine data files.<br>合并数据文件</p>
+<p>1.将图片的命名改为[lang].[fontname].exp[num].tif（改后缀建议通过另存为的方法来选择tif）</p>
+<p>例如：BlackLang.HelloWorldDemo.exp0.tif</p>
+<p>2.生成box文件</p>
+<p>提一张官网的图<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db4d8861dcf64?w=695&amp;h=47&amp;f=png&amp;s=36784" alt=""><br>输入路径和输出路径文件名为了方便我这里就保持一直了<br>因为我们训练的是中文，所以加上-l chi_sim，这样减少我们在调整的时候的差异。实际的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract BlackLang.HelloWorldDemo.exp0.tif BlackLang.HelloWorldDemo.exp0 -l chi_sim batch.nochop makebox</span><br></pre></td></tr></table></figure></p>
+<p>这样就会在目标目录中生成一个.box的文件，如下图<br><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db5a91f1a135b?w=962&amp;h=222&amp;f=png&amp;s=23100" alt=""><br>好奇的同学可以点开.box的文件看下，其实里面就是每个字的坐标之类的东西</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db5dc82d7ecba?w=344&amp;h=341&amp;f=png&amp;s=19223" alt=""></p>
+<p>3.使用jTessBoxEditor</p>
+<p>这里为了方便我们矫正box文件，这里使用一个工具jTessBoxEditor：<br><a href="https://sourceforge.net/projects/vietocr/files/jTessBoxEditor/" target="_blank" rel="noopener">VietOCR - Browse /jTessBoxEditor at SourceForge.net</a></p>
+<p>安装好了之后，打开jTessBoxEditor，点击open，选择对应的tif（如果这里tif和box不在一个目录中会有问题哦）</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db679105d31cd?w=903&amp;h=506&amp;f=png&amp;s=44035" alt=""><br>3.1在Box Coordinates中通过调整x、y、w、h来框住对应的字，然后再char中输入正确的字</p>
+<p>3.2在Box View中可以看到每个字的放大图，来确认是否完全选中</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db6b602da91a2?w=1195&amp;h=469&amp;f=png&amp;s=32710" alt=""><br>这样将每个字都校验一遍后，点击save即可：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db7c28f1aeffa?w=779&amp;h=473&amp;f=png&amp;s=40125" alt=""></p>
+<p>4.训练</p>
+<p>4.1生成tr文件</p>
+<p>输入命令：tesseract.exe [tif图片文件名] [生成的tr文件名] nobatch box.train<br>t<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract.exe BlackLang.HelloWorldDemo.exp0.tif BlackLang.HelloWorldDemo.exp0 nobatch box.train</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db8ab2d5c01f7?w=985&amp;h=444&amp;f=png&amp;s=43435" alt=""><br>4.2生成unicharset文件</p>
+<p>输入命令：unicharset_extractor.exe [box文件名]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unicharset_extractor.exe BlackLang.HelloWorldDemo.exp0.box</span><br></pre></td></tr></table></figure></p>
+<p>这里如果你有多个图片需要去生成字库的话，就需要合并成一个char集合</p>
+<p>输入命令：unicharset_extractor.exe [第一个box文件名] [第二个box文件名] ···<br>这里演示demo就只用一个box</p>
+<p>4.3定义字体特征文件font_properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;fontname&gt; &lt;italic&gt; &lt;bold&gt; &lt;fixed&gt; &lt;serif&gt; &lt;fraktur&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这里的tontname必须要和[lang].[fontname].exp[num].box保持一致；<br>\<italic> 、\<bold> 、\<fixed> 、\<serif>、\<fraktur>的取值为1或0，表示字体是否具有这些属性。</fraktur></serif></fixed></bold></italic></p>
+<p>这里我们在目录中创建一个名字为font_properties的文件，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HelloWorldDemo 0 0 0 0 0</span><br></pre></td></tr></table></figure></p>
+<p>这是我们的目录中的文件如下：<br>一个目标图片.tif，一个分析.box，一个训练结果.tr，一个字符集unicharset，一个特征文件font_properties</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167db995455450d4?w=321&amp;h=125&amp;f=png&amp;s=6513" alt=""></p>
+<p>4.4生成字典<br>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mftraining.exe -F font_properties -U unicharset -O BlackLang.unicharset BlackLang.HelloWorldDemo.exp0.tr</span><br><span class="line">#这里如果有多个tr就连在后面写多个tr即可</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cntraining.exe BlackLang.HelloWorldDemo.exp0.tr</span><br><span class="line">#这里如果有多个tr就连在后面写多个tr即可</span><br></pre></td></tr></table></figure>
+<p>如图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167dba5a037d4f90?w=973&amp;h=607&amp;f=png&amp;s=59762" alt=""><br>执行完成之后，发现多了5个文件。然后讲这5个文件都改成lang开头，即[lang].XXX<br>（inttemp、pffmtable、normproto、shapetable；BlackLang.unicharset已经是了就不用改了）</p>
+<p>有兴趣的同学可以通过编辑器打开看看里面都是啥，会发现里面都是一些蛮有意思的乱码哈哈哈</p>
+<p>4.5 合并文件<br>输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">combine_tessdata BlackLang.</span><br><span class="line">#combine_tessdata [lang].</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167dbaca46f9b9bf?w=478&amp;h=159&amp;f=png&amp;s=10065" alt=""><br>这里需要注意的是[lang]后面还有个点，很关键<br>然后是执行的结果中，1、3、4、5、13这些都不是-1，这样一个新的语言文件就生成了，或者说是一个新的字体文件—[lang].traineddata</p>
+<p>然后将刚刚生成的[lang].traineddata复制到tesseract-ocr的tessdata中<br>再来执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tesseract HelloWorldDemo.png answer -l BlackLang</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/12/23/167dbc44001fcd4a?w=626&amp;h=148&amp;f=png&amp;s=14230" alt=""><br>这样原本的图片就能解析成功了</p>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>这只是一个非常demo的训练，正常现在生产中使用这个还是万万不够的，需要对某个字体的全部的汉子进行大量的训练才行<br>总的来说，tesseract对中文的识别能力还是很差的，更别说是手写的中文了，那识别率基本是没有。但是对英文还有数字的识别率还是很可观的。<br>这里也只是一个简单的对于tesseract分享记录而已~</p>
+<p>现在已经有很多被封装后的ocr例如pyocr啊，tess4J啊之类的，或者各大厂提供的api这些的识别率就很高了毕竟模型已经训练的很好了，这些就下次再说吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/24/搞一个HelloWorld版的OCR/" data-id="cjq1siwj00001jwqbtclrjhnn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/24/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/12/24/搞一个HelloWorld版的OCR/">HelloWorld! tesseract-ocr</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/24/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
